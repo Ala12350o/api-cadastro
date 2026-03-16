@@ -96,6 +96,10 @@ salvarProdutos(produtos);
 res.status(201).json({ message:'Produto cadastrado com sucesso!', produto: novoProduto });
 });
 
+app.get('/produtos', (req, res) => {
+    const produtos = lerProdutos();
+    res.status(200).json(produtos);
+});
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
