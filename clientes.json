@@ -6,5 +6,13 @@
     "endereco": "Campo largo",
     "bairro": "Bateias",
     "contato": "998080800"
+  },
+  {
+    "cpf": 11122233344,
+    "nome": "Maria",
+    "idade": 17,
+    "endereco": "Campo largo",
+    "bairro": "Bateias",
+    "contato": "6969696969"
   }
 ]
