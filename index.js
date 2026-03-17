@@ -56,6 +56,19 @@ app.get('/clientes', (req, res) => {
     res.status(200).json(clientes);
 });
 
+app.get('/clientes/:cpf', (req, res) => {
+    const { cpf } = req.params;
+    const clientes = lerClientes();
+    
+    const cliente = clientes.find(c => c.cpf == cpf);
+    
+    if (!cliente) {
+        return res.status(404).json({ error: 'esse cpf não está cadastrado' });
+    }
+    
+    res.status(200).json(cliente);
+});
+
 const produtosFile = path.join(__dirname, "produtos.json");
 
 function lerProdutos() {
@@ -86,7 +99,7 @@ app.post('/produtos', (req, res) => {
     const produtos = lerProdutos();
     
     if(produtos.some(p => p.id === id && p.nome === nome)) {
-        return res.status(400).json({ error: 'Produto com ID e nome já cadastrado.' });
+        return res.status(400).json({ error: 'Produto com ID e nome igual já cadastrado.' });
     }
 
 const novoProduto = {nome, descricao, valor, id};
@@ -99,6 +112,19 @@ res.status(201).json({ message:'Produto cadastrado com sucesso!', produto: novoP
 app.get('/produtos', (req, res) => {
     const produtos = lerProdutos();
     res.status(200).json(produtos);
+});
+
+app.get('/produtos/:id/:nome', (req, res) => {
+    const { id, nome } = req.params;
+    const produtos = lerProdutos();
+    
+    const produto = produtos.find(p => p.id == id && p.nome === nome);
+    
+    if (!produto) {
+        return res.status(404).json({ error: 'nome ou id não cadastrado' });
+    }
+    
+    res.status(200).json(produto);
 });
 
 app.listen(port, () => {

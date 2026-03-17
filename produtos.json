@@ -16,5 +16,11 @@
     "descricao": "carro para dar uma volta",
     "valor": 400000,
     "id": 2
+  },
+  {
+    "nome": "Carro",
+    "descricao": "carro para dar uma volta",
+    "valor": 670000,
+    "id": 3
   }
 ]

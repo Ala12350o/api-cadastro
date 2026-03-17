@@ -22,5 +22,13 @@
     "endereco": "São paulo",
     "bairro": "brasilandia",
     "contato": "550992010"
+  },
+  {
+    "cpf": 15420077972,
+    "nome": "Manuzinha",
+    "idade": 6,
+    "endereco": "Paraná",
+    "bairro": "Bateias",
+    "contato": "940028922"
   }
 ]
