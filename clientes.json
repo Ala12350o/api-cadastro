@@ -30,5 +30,13 @@
     "endereco": "Paraná",
     "bairro": "Bateias",
     "contato": "940028922"
+  },
+  {
+    "cpf": 15420077973,
+    "nome": "eduzão",
+    "idade": 6,
+    "endereco": "Paraná",
+    "bairro": "Bateias",
+    "contato": "940028922"
   }
 ]

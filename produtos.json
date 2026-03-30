@@ -22,5 +22,17 @@
     "descricao": "carro para dar uma volta",
     "valor": 670000,
     "id": 3
+  },
+  {
+    "nome": "computador",
+    "descricao": "pc pra uso",
+    "valor": 670000,
+    "id": 5
+  },
+  {
+    "nome": "computador",
+    "descricao": "pc pra uso",
+    "valor": 670000,
+    "id": 2
   }
 ]
