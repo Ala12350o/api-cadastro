@@ -1,11 +1,13 @@
 const express = require('express'); //servidor web
 const fs = require('fs'); //manipulação de arquivos
 const path = require('path'); //manipulação de caminhos
+const cors = require('cors'); //manipulação de arquivos
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(cors());
 
 /*
 CLIENTES ENDPOINTS:
@@ -125,6 +127,78 @@ app.get('/produtos/:id/:nome', (req, res) => {
     }
     
     res.status(200).json(produto);
+});
+
+
+
+const usuariosFile = path.join(__dirname, "usuarios.json");
+
+function lerUsuarios() {
+    if (!fs.existsSync(usuariosFile)) {
+        return [];
+    }
+    const dadosUsuarios = fs.readFileSync(usuariosFile, 'utf-8');
+
+    try {
+        return JSON.parse(dadosUsuarios) || [];
+    } catch (e) {
+        return [];
+    }
+
+}
+
+function salvarUsuarios(usuarios) {
+    fs.writeFileSync(usuariosFile, JSON.stringify(usuarios, null, 2), 'utf-8');
+}
+
+app.post('/usuarios', (req, res) => {
+    const {codigo, nome, email, senha} = req.body;
+
+    if (!codigo || !nome || !email || !senha) {
+        return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+    }
+
+    const usuarios = lerUsuarios();
+    
+    if(usuarios.some(u => u.email === email || u.codigo === codigo)) {
+        return res.status(400).json({ error: 'Email ou código já cadastrados.' });
+    }
+
+const novoUsuario = {codigo, nome, email, senha};
+usuarios.push(novoUsuario);
+salvarUsuarios(usuarios);
+
+res.status(201).json({ message:'Usuario cadastrado com sucesso!', usuario: novoUsuario });
+});
+
+app.get('/usuarios', (req, res) => {
+    const usuarios = lerUsuarios();
+    res.status(200).json(usuarios);
+});
+
+app.get('/usuarios/:email', (req, res) => {
+    const { email } = req.params;
+    const usuarios = lerUsuarios();
+    
+    const usuario = usuarios.find(u => u.email === email);
+    
+    if (!usuario) {
+        return res.status(404).json({ error: 'Email não cadastrado' });
+    }
+    
+    res.status(200).json(usuario);
+});
+app.post('/login', (req, res) => {
+    const { email, senha } = req.body;
+    const usuarios = lerUsuarios();
+    
+    const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+    
+    if (!usuario) {
+        return res.status(401).json({ error: 'Email ou senha incorretos' });
+    }
+    
+    res.status(200).json({ message: 'Login realizado com sucesso', usuario });
 });
 
 app.listen(port, () => {
