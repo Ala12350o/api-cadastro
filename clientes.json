@@ -38,5 +38,21 @@
     "endereco": "Paraná",
     "bairro": "Bateias",
     "contato": "940028922"
+  },
+  {
+    "cpf": "16209288896",
+    "nome": "Eduardo Silla da costa",
+    "idade": 32,
+    "endereco": "Rua do joão",
+    "bairro": "Brasilzilza",
+    "contato": "41996541954"
+  },
+  {
+    "cpf": "54209209988",
+    "nome": "Ygor bida",
+    "idade": 21,
+    "endereco": "Rua do cal",
+    "bairro": "Bateias",
+    "contato": "415550440"
   }
 ]
