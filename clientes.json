@@ -38,5 +38,13 @@
     "endereco": "Paraná",
     "bairro": "Bateias",
     "contato": "940028922"
+  },
+  {
+    "cpf": 14309202994,
+    "nome": "Vanessa",
+    "idade": 18,
+    "endereco": "Campo Largo",
+    "bairro": "Estrada da onça",
+    "contato": "41996062019"
   }
 ]

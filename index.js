@@ -24,7 +24,7 @@ function lerClientes() {
     try {
         return JSON.parse(dadosClientes) || [];
     } catch (e) {
-        return [];
+        return []
     }
 
 }
@@ -34,25 +34,25 @@ function salvarClientes(clientes) {
 }
 
 app.post('/clientes', (req, res) => {
-    const {cpf, nome, idade, endereco, bairro, contato} = req.body;
+    const { cpf, nome, idade, endereco, bairro, contato } = req.body;
 
     if (!cpf || !nome || !idade || !endereco || !bairro || !contato) {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
     }
 
     const clientes = lerClientes();
-    
-    if(clientes.some(c => c.cpf === cpf)) {
+
+    if (clientes.some(c => c.cpf === cpf)) {
         return res.status(400).json({ error: 'CPF já cadastrado.' });
     }
 
-const novoCliente = {cpf, nome, idade, endereco, bairro, contato};
-clientes.push(novoCliente);
-salvarClientes(clientes);
+    const novoCliente = { cpf, nome, idade, endereco, bairro, contato };
+    clientes.push(novoCliente);
+    salvarClientes(clientes);
 
-res.status(201).json({ message:'Cliente cadastrado com sucesso!', cliente: novoCliente });
+    res.status(201).json({ message: 'Cliente cadastrado com sucesso!', cliente: novoCliente });
 });
-  
+
 app.get('/clientes', (req, res) => {
     const clientes = lerClientes();
     res.status(200).json(clientes);
@@ -61,13 +61,13 @@ app.get('/clientes', (req, res) => {
 app.get('/clientes/:cpf', (req, res) => {
     const { cpf } = req.params;
     const clientes = lerClientes();
-    
+
     const cliente = clientes.find(c => c.cpf == cpf);
-    
+
     if (!cliente) {
         return res.status(404).json({ error: 'esse cpf não está cadastrado' });
     }
-    
+
     res.status(200).json(cliente);
 });
 
@@ -92,23 +92,23 @@ function salvarProdutos(produtos) {
 }
 
 app.post('/produtos', (req, res) => {
-    const {nome, id, valor, descricao} = req.body;
+    const { nome, id, valor, descricao } = req.body;
 
     if (!nome || !descricao || !valor || !id) {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
     }
 
     const produtos = lerProdutos();
-    
-    if(produtos.some(p => p.id === id && p.nome === nome)) {
-        return res.status(400).json({ error: 'Produto com ID e nome igual já cadastrado.' });
+
+    if(produtos.some(p => p.id === id)) {
+        return res.status(400).json({ error: 'ID já cadastrado.' });
     }
 
-const novoProduto = {nome, descricao, valor, id};
-produtos.push(novoProduto);
-salvarProdutos(produtos);
+    const novoProduto = { nome, descricao, valor, id };
+    produtos.push(novoProduto);
+    salvarProdutos(produtos);
 
-res.status(201).json({ message:'Produto cadastrado com sucesso!', produto: novoProduto });
+    res.status(201).json({ message: 'Produto cadastrado com sucesso!', produto: novoProduto });
 });
 
 app.get('/produtos', (req, res) => {
@@ -116,16 +116,16 @@ app.get('/produtos', (req, res) => {
     res.status(200).json(produtos);
 });
 
-app.get('/produtos/:id/:nome', (req, res) => {
-    const { id, nome } = req.params;
+app.get('/produtos/:id', (req, res) => {
+    const { id } = req.params;
     const produtos = lerProdutos();
-    
-    const produto = produtos.find(p => p.id == id && p.nome === nome);
-    
+
+    const produto = produtos.find(p => p.id == id);
+
     if (!produto) {
-        return res.status(404).json({ error: 'nome ou id não cadastrado' });
+        return res.status(404).json({ error: 'ID não cadastrado' });
     }
-    
+
     res.status(200).json(produto);
 });
 
@@ -152,23 +152,23 @@ function salvarUsuarios(usuarios) {
 }
 
 app.post('/usuarios', (req, res) => {
-    const {codigo, nome, email, senha} = req.body;
+    const { codigo, nome, email, senha } = req.body;
 
     if (!codigo || !nome || !email || !senha) {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
     }
 
     const usuarios = lerUsuarios();
-    
-    if(usuarios.some(u => u.email === email || u.codigo === codigo)) {
+
+    if (usuarios.some(u => u.email === email || u.codigo === codigo)) {
         return res.status(400).json({ error: 'Email ou código já cadastrados.' });
     }
 
-const novoUsuario = {codigo, nome, email, senha};
-usuarios.push(novoUsuario);
-salvarUsuarios(usuarios);
+    const novoUsuario = { codigo, nome, email, senha };
+    usuarios.push(novoUsuario);
+    salvarUsuarios(usuarios);
 
-res.status(201).json({ message:'Usuario cadastrado com sucesso!', usuario: novoUsuario });
+    res.status(201).json({ message: 'Usuario cadastrado com sucesso!', usuario: novoUsuario });
 });
 
 app.get('/usuarios', (req, res) => {
@@ -179,25 +179,25 @@ app.get('/usuarios', (req, res) => {
 app.get('/usuarios/:email', (req, res) => {
     const { email } = req.params;
     const usuarios = lerUsuarios();
-    
+
     const usuario = usuarios.find(u => u.email === email);
-    
+
     if (!usuario) {
         return res.status(404).json({ error: 'Email não cadastrado' });
     }
-    
+
     res.status(200).json(usuario);
 });
 app.post('/login', (req, res) => {
     const { email, senha } = req.body;
     const usuarios = lerUsuarios();
-    
+
     const usuario = usuarios.find(u => u.email === email && u.senha === senha);
-    
+
     if (!usuario) {
         return res.status(401).json({ error: 'Email ou senha incorretos' });
     }
-    
+
     res.status(200).json({ message: 'Login realizado com sucesso', usuario });
 });
 

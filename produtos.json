@@ -1,38 +1,14 @@
 [
   {
-    "nome": "esponja",
-    "descricao": "esponja para limpeza",
-    "valor": 4.9,
-    "id": 1
-  },
-  {
     "nome": "Carro",
     "descricao": "carro para dar uma volta",
     "valor": 400000,
     "id": 1
   },
   {
-    "nome": "Carro",
-    "descricao": "carro para dar uma volta",
-    "valor": 400000,
-    "id": 2
-  },
-  {
-    "nome": "Carro",
-    "descricao": "carro para dar uma volta",
-    "valor": 670000,
-    "id": 3
-  },
-  {
-    "nome": "computador",
-    "descricao": "pc pra uso",
-    "valor": 670000,
-    "id": 5
-  },
-  {
-    "nome": "computador",
-    "descricao": "pc pra uso",
-    "valor": 670000,
+    "nome": "Ps5",
+    "descricao": "um video game",
+    "valor": 5000,
     "id": 2
   }
 ]

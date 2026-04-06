@@ -10,5 +10,11 @@
     "nome": "alan martins",
     "email": "AlanV@gmail.com",
     "senha": "alan19102009"
+  },
+  {
+    "codigo": 3,
+    "nome": "Maria Vitoria",
+    "email": "MariaVV@gmail.com",
+    "senha": "Mv28022009"
   }
 ]
