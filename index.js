@@ -71,6 +71,22 @@ app.get('/clientes/:cpf', (req, res) => {
     res.status(200).json(cliente);
 });
 
+app.delete('/clientes/:cpf', (req, res) => {
+    const { cpf } = req.params;
+    const clientes = lerClientes();
+    
+    const clienteIndex = clientes.findIndex(c => c.cpf == cpf);
+    
+    if (clienteIndex === -1) {
+        return res.status(404).json({ error: 'esse cpf não está cadastrado' });
+    }
+    
+    const clienteRemovido = clientes.splice(clienteIndex, 1)[0];
+    salvarClientes(clientes);
+    
+    res.status(200).json({ message: 'Cliente removido com sucesso!', cliente: clienteRemovido });
+});
+
 const produtosFile = path.join(__dirname, "produtos.json");
 
 function lerProdutos() {
@@ -129,7 +145,21 @@ app.get('/produtos/:id', (req, res) => {
     res.status(200).json(produto);
 });
 
-
+app.delete('/produtos/:id', (req, res) => {
+    const { id } = req.params;
+    const produtos = lerProdutos();
+    
+    const produtoIndex = produtos.findIndex(p => p.id == id);
+    
+    if (produtoIndex === -1) {
+        return res.status(404).json({ error: 'ID não cadastrado' });
+    }
+    
+    const produtoRemovido = produtos.splice(produtoIndex, 1)[0];
+    salvarProdutos(produtos);
+    
+    res.status(200).json({ message: 'Produto removido com sucesso!', produto: produtoRemovido });
+});
 
 const usuariosFile = path.join(__dirname, "usuarios.json");
 

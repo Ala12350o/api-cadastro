@@ -10,5 +10,29 @@
     "descricao": "um video game",
     "valor": 5000,
     "id": 2
+  },
+  {
+    "nome": "Caneta",
+    "descricao": "uma caneta",
+    "valor": 3.99,
+    "id": 3
+  },
+  {
+    "nome": "Bola de futebol",
+    "descricao": "uma bola de futebol (soccer)",
+    "valor": 39.99,
+    "id": 4
+  },
+  {
+    "nome": "bola de tenis",
+    "descricao": "uma bola de tenis",
+    "valor": 23.55,
+    "id": 5
+  },
+  {
+    "nome": "teclado",
+    "descricao": "llllllllllllll",
+    "valor": 56.88,
+    "id": 6
   }
 ]
