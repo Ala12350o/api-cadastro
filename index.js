@@ -34,19 +34,19 @@ function salvarClientes(clientes) {
 }
 
 app.post('/clientes', (req, res) => {
-    const { cpf, nome, idade, endereco, bairro, contato } = req.body;
+    const { cpf, nome, idade, endereco, bairro, contato, usuario_codigo } = req.body;
 
-    if (!cpf || !nome || !idade || !endereco || !bairro || !contato) {
-        return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+    if (!cpf || !nome || !idade || !endereco || !bairro || !contato || !usuario_codigo) {
+        return res.status(400).json({ error: 'Todos os campos são obrigatórios, incluindo usuario_codigo.' });
     }
 
     const clientes = lerClientes();
 
-    if (clientes.some(c => c.cpf === cpf)) {
-        return res.status(400).json({ error: 'CPF já cadastrado.' });
+    if (clientes.some(c => c.cpf === cpf && c.usuario_codigo == usuario_codigo)) {
+        return res.status(400).json({ error: 'CPF já cadastrado para este usuário.' });
     }
 
-    const novoCliente = { cpf, nome, idade, endereco, bairro, contato };
+    const novoCliente = { cpf, nome, idade, endereco, bairro, contato, usuario_codigo };
     clientes.push(novoCliente);
     salvarClientes(clientes);
 
@@ -54,12 +54,20 @@ app.post('/clientes', (req, res) => {
 });
 
 app.get('/clientes', (req, res) => {
+    const { usuario_codigo } = req.query;
     const clientes = lerClientes();
-    res.status(200).json(clientes);
+    
+    if (usuario_codigo) {
+        const clientesFiltrados = clientes.filter(c => c.usuario_codigo == usuario_codigo);
+        res.status(200).json(clientesFiltrados);
+    } else {
+        res.status(200).json(clientes);
+    }
 });
 
 app.get('/clientes/:cpf', (req, res) => {
     const { cpf } = req.params;
+    const { usuario_codigo } = req.query;
     const clientes = lerClientes();
 
     const cliente = clientes.find(c => c.cpf == cpf);
@@ -68,17 +76,60 @@ app.get('/clientes/:cpf', (req, res) => {
         return res.status(404).json({ error: 'esse cpf não está cadastrado' });
     }
 
+    if (usuario_codigo && cliente.usuario_codigo != usuario_codigo) {
+        return res.status(403).json({ error: 'Você não tem permissão para ver este cliente' });
+    }
+
     res.status(200).json(cliente);
+});
+
+app.put('/clientes/:cpf', (req, res) => {
+    const { cpf } = req.params;
+    const { nome, idade, endereco, bairro, contato, usuario_codigo } = req.body;
+    const clientes = lerClientes();
+    
+    const clienteIndex = clientes.findIndex(c => c.cpf == cpf);
+    
+    if (clienteIndex === -1) {
+        return res.status(404).json({ error: 'CPF não cadastrado' });
+    }
+    
+    const cliente = clientes[clienteIndex];
+    
+    if (usuario_codigo && cliente.usuario_codigo != usuario_codigo) {
+        return res.status(403).json({ error: 'Você não tem permissão para atualizar este cliente' });
+    }
+    
+    const clienteAtualizado = {
+        ...cliente,
+        nome: nome || cliente.nome,
+        idade: idade || cliente.idade,
+        endereco: endereco || cliente.endereco,
+        bairro: bairro || cliente.bairro,
+        contato: contato || cliente.contato
+    };
+    
+    clientes[clienteIndex] = clienteAtualizado;
+    salvarClientes(clientes);
+    
+    res.status(200).json({ message: 'Cliente atualizado com sucesso!', cliente: clienteAtualizado });
 });
 
 app.delete('/clientes/:cpf', (req, res) => {
     const { cpf } = req.params;
+    const { usuario_codigo } = req.query;
     const clientes = lerClientes();
     
     const clienteIndex = clientes.findIndex(c => c.cpf == cpf);
     
     if (clienteIndex === -1) {
         return res.status(404).json({ error: 'esse cpf não está cadastrado' });
+    }
+    
+    const cliente = clientes[clienteIndex];
+    
+    if (usuario_codigo && cliente.usuario_codigo != usuario_codigo) {
+        return res.status(403).json({ error: 'Você não tem permissão para deletar este cliente' });
     }
     
     const clienteRemovido = clientes.splice(clienteIndex, 1)[0];
@@ -108,19 +159,19 @@ function salvarProdutos(produtos) {
 }
 
 app.post('/produtos', (req, res) => {
-    const { nome, id, valor, descricao } = req.body;
+    const { nome, id, valor, descricao, usuario_codigo } = req.body;
 
-    if (!nome || !descricao || !valor || !id) {
-        return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+    if (!nome || !descricao || !valor || !id || !usuario_codigo) {
+        return res.status(400).json({ error: 'Todos os campos são obrigatórios, incluindo usuario_codigo.' });
     }
 
     const produtos = lerProdutos();
 
-    if(produtos.some(p => p.id === id)) {
-        return res.status(400).json({ error: 'ID já cadastrado.' });
+    if(produtos.some(p => p.id === id && p.usuario_codigo == usuario_codigo)) {
+        return res.status(400).json({ error: 'ID já cadastrado para este usuário.' });
     }
 
-    const novoProduto = { nome, descricao, valor, id };
+    const novoProduto = { nome, descricao, valor, id, usuario_codigo };
     produtos.push(novoProduto);
     salvarProdutos(produtos);
 
@@ -128,12 +179,20 @@ app.post('/produtos', (req, res) => {
 });
 
 app.get('/produtos', (req, res) => {
+    const { usuario_codigo } = req.query;
     const produtos = lerProdutos();
-    res.status(200).json(produtos);
+    
+    if (usuario_codigo) {
+        const produtosFiltrados = produtos.filter(p => p.usuario_codigo == usuario_codigo);
+        res.status(200).json(produtosFiltrados);
+    } else {
+        res.status(200).json(produtos);
+    }
 });
 
 app.get('/produtos/:id', (req, res) => {
     const { id } = req.params;
+    const { usuario_codigo } = req.query;
     const produtos = lerProdutos();
 
     const produto = produtos.find(p => p.id == id);
@@ -142,17 +201,58 @@ app.get('/produtos/:id', (req, res) => {
         return res.status(404).json({ error: 'ID não cadastrado' });
     }
 
+    if (usuario_codigo && produto.usuario_codigo != usuario_codigo) {
+        return res.status(403).json({ error: 'Você não tem permissão para ver este produto' });
+    }
+
     res.status(200).json(produto);
 });
 
-app.delete('/produtos/:id', (req, res) => {
+app.put('/produtos/:id', (req, res) => {
     const { id } = req.params;
+    const { nome, valor, descricao, usuario_codigo } = req.body;
     const produtos = lerProdutos();
     
     const produtoIndex = produtos.findIndex(p => p.id == id);
     
     if (produtoIndex === -1) {
         return res.status(404).json({ error: 'ID não cadastrado' });
+    }
+    
+    const produto = produtos[produtoIndex];
+    
+    if (usuario_codigo && produto.usuario_codigo != usuario_codigo) {
+        return res.status(403).json({ error: 'Você não tem permissão para atualizar este produto' });
+    }
+    
+    const produtoAtualizado = {
+        ...produto,
+        nome: nome || produto.nome,
+        valor: valor || produto.valor,
+        descricao: descricao || produto.descricao
+    };
+    
+    produtos[produtoIndex] = produtoAtualizado;
+    salvarProdutos(produtos);
+    
+    res.status(200).json({ message: 'Produto atualizado com sucesso!', produto: produtoAtualizado });
+});
+
+app.delete('/produtos/:id', (req, res) => {
+    const { id } = req.params;
+    const { usuario_codigo } = req.query;
+    const produtos = lerProdutos();
+    
+    const produtoIndex = produtos.findIndex(p => p.id == id);
+    
+    if (produtoIndex === -1) {
+        return res.status(404).json({ error: 'ID não cadastrado' });
+    }
+    
+    const produto = produtos[produtoIndex];
+    
+    if (usuario_codigo && produto.usuario_codigo != usuario_codigo) {
+        return res.status(403).json({ error: 'Você não tem permissão para deletar este produto' });
     }
     
     const produtoRemovido = produtos.splice(produtoIndex, 1)[0];
