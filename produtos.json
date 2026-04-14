@@ -1,38 +1,58 @@
 [
   {
-    "nome": "Carro",
-    "descricao": "carro para dar uma volta",
-    "valor": 400000,
-    "id": 1
-  },
-  {
-    "nome": "Ps5",
-    "descricao": "um video game",
-    "valor": 5000,
-    "id": 2
-  },
-  {
     "nome": "Caneta",
     "descricao": "uma caneta",
     "valor": 3.99,
-    "id": 3
-  },
-  {
-    "nome": "Bola de futebol",
-    "descricao": "uma bola de futebol (soccer)",
-    "valor": 39.99,
-    "id": 4
+    "id": 3,
+    "usuario_codigo": 2
   },
   {
     "nome": "bola de tenis",
     "descricao": "uma bola de tenis",
     "valor": 23.55,
-    "id": 5
+    "id": 5,
+    "usuario_codigo": 2
   },
   {
     "nome": "computador",
     "descricao": "pc pra uso",
     "valor": 670000,
-    "id": 2
+    "id": 2,
+    "usuario_codigo": 1
+  },
+  {
+    "nome": "Fone de ouvido",
+    "descricao": "um fone para ouvir",
+    "valor": 43.99,
+    "id": 9,
+    "usuario_codigo": 2
+  },
+  {
+    "nome": "caneta preta",
+    "descricao": "uma caneta preta",
+    "valor": 3.99,
+    "id": 1,
+    "usuario_codigo": 1
+  },
+  {
+    "nome": "afdyhfhfjfgk",
+    "descricao": "477777777777777",
+    "valor": 33333,
+    "id": 10,
+    "usuario_codigo": 1
+  },
+  {
+    "nome": "3332623",
+    "descricao": "44444444444444444444",
+    "valor": 2367262,
+    "id": 11,
+    "usuario_codigo": 1
+  },
+  {
+    "nome": "caneta preta",
+    "descricao": "6666666666666666666",
+    "valor": 344555,
+    "id": 12,
+    "usuario_codigo": 2
   }
 ]

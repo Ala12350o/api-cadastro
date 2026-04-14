@@ -16,5 +16,11 @@
     "nome": "Maria Vitoria",
     "email": "MariaVV@gmail.com",
     "senha": "Mv28022009"
+  },
+  {
+    "codigo": 4,
+    "nome": "Matheus Eduardo Vilton",
+    "email": "Matheus@gmail.com",
+    "senha": "matheus19102009"
   }
 ]

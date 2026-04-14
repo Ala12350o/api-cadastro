@@ -5,7 +5,8 @@
     "idade": 15,
     "endereco": "Campo largo",
     "bairro": "Bateias",
-    "contato": "998080800"
+    "contato": "998080800",
+    "usuario_codigo": 1
   },
   {
     "cpf": 11122233344,
@@ -13,23 +14,8 @@
     "idade": 17,
     "endereco": "Campo largo",
     "bairro": "Bateias",
-    "contato": "6969696969"
-  },
-  {
-    "cpf": 12309205288,
-    "nome": "Eduardo",
-    "idade": 18,
-    "endereco": "São paulo",
-    "bairro": "brasilandia",
-    "contato": "550992010"
-  },
-  {
-    "cpf": 15420077972,
-    "nome": "Manuzinha",
-    "idade": 6,
-    "endereco": "Paraná",
-    "bairro": "Bateias",
-    "contato": "940028922"
+    "contato": "6969696969",
+    "usuario_codigo": 2
   },
   {
     "cpf": 15420077973,
@@ -37,6 +23,16 @@
     "idade": 6,
     "endereco": "Paraná",
     "bairro": "Bateias",
-    "contato": "940028922"
+    "contato": "940028922",
+    "usuario_codigo": 1
+  },
+  {
+    "cpf": "15309220367",
+    "nome": "alan",
+    "idade": 15,
+    "endereco": "Campo largo",
+    "bairro": "Bateias",
+    "contato": "998080800",
+    "usuario_codigo": 2
   }
 ]
